@@ -14,10 +14,20 @@ class MainActivity : FlutterActivity() {
             when (call.method) {
                 "startBlocking" -> {
                     AppBlockerService.isBlockingEnabled = true
+                    try {
+                        startLockTask()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                     result.success(null)
                 }
                 "stopBlocking" -> {
                     AppBlockerService.isBlockingEnabled = false
+                    try {
+                        stopLockTask()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                     result.success(null)
                 }
                 else -> {
