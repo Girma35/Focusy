@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'app/workflow/presentation/app_shell.dart';
+import 'app/workflow/presentation/screens/simple_focus_screen.dart';
 
-Future<void> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: FocusyApp()));
+  runApp(const FocusyApp());
 }
 
 class FocusyApp extends StatelessWidget {
@@ -24,7 +23,7 @@ class FocusyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const AppShell(),
+      home: const SimpleFocusScreen(),
     );
   }
 }
