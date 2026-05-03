@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">Focusy needs accessibility service to detect and block distracting apps while you are in a focus session.</string>
+</resources>
