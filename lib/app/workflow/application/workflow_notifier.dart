@@ -9,7 +9,7 @@ import '../infrastructure/workflow_services.dart';
 const kPlanningDuration = Duration(minutes: 30);
 
 final workflowServicesProvider = Provider<WorkflowServices>(
-  (_) => WorkflowServices.noop(),
+  (_) => WorkflowServices.native(),
 );
 
 // ---------------------------------------------------------------------------

@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 abstract class AlarmScheduler {
   Future<void> scheduleWakeUpAlarm(DateTime wakeUpTime);
 }
@@ -44,6 +46,28 @@ class NoopDistractionBlockService implements DistractionBlockService {
   Future<void> unblockDistractingApps() async {}
 }
 
+class NativeDistractionBlockService implements DistractionBlockService {
+  static const _channel = MethodChannel('com.focusy/blocker');
+
+  @override
+  Future<void> blockDistractingApps() async {
+    try {
+      await _channel.invokeMethod('startBlocking');
+    } catch (e) {
+      // Ignored for now
+    }
+  }
+
+  @override
+  Future<void> unblockDistractingApps() async {
+    try {
+      await _channel.invokeMethod('stopBlocking');
+    } catch (e) {
+      // Ignored for now
+    }
+  }
+}
+
 class NoopProductivitySyncService implements ProductivitySyncService {
   @override
   Future<void> syncCalendarAndTasks({
@@ -70,6 +94,15 @@ class WorkflowServices {
       alarmScheduler: NoopAlarmScheduler(),
       deviceControlService: NoopDeviceControlService(),
       distractionBlockService: NoopDistractionBlockService(),
+      productivitySyncService: NoopProductivitySyncService(),
+    );
+  }
+
+  factory WorkflowServices.native() {
+    return WorkflowServices(
+      alarmScheduler: NoopAlarmScheduler(),
+      deviceControlService: NoopDeviceControlService(),
+      distractionBlockService: NativeDistractionBlockService(),
       productivitySyncService: NoopProductivitySyncService(),
     );
   }
