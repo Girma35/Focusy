@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'app/workflow/domain/focus_session.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +12,7 @@ Future<void> main() async {
 final isarProvider = FutureProvider<Isar>((ref) async {
   final directory = await getApplicationDocumentsDirectory();
   return Isar.open(
-    const [],
+    [FocusSessionSchema],
     name: 'focusy',
     directory: directory.path,
   );
