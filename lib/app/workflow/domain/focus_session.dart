@@ -9,6 +9,7 @@ class FocusSession {
     this.id = Isar.autoIncrement,
     required this.date,
     this.wakeUpTime,
+    this.planningEndsAt,
     this.workStartTime,
     this.workEndTime,
     this.phase = 0,
@@ -26,6 +27,7 @@ class FocusSession {
   late String date;
 
   DateTime? wakeUpTime;
+  DateTime? planningEndsAt;
   DateTime? workStartTime;
   DateTime? workEndTime;
 

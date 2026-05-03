@@ -42,23 +42,28 @@ const FocusSessionSchema = CollectionSchema(
       name: r'phase',
       type: IsarType.long,
     ),
-    r'strictFocusEnabled': PropertySchema(
+    r'planningEndsAt': PropertySchema(
       id: 5,
+      name: r'planningEndsAt',
+      type: IsarType.dateTime,
+    ),
+    r'strictFocusEnabled': PropertySchema(
+      id: 6,
       name: r'strictFocusEnabled',
       type: IsarType.bool,
     ),
     r'wakeUpTime': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'wakeUpTime',
       type: IsarType.dateTime,
     ),
     r'workEndTime': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'workEndTime',
       type: IsarType.dateTime,
     ),
     r'workStartTime': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'workStartTime',
       type: IsarType.dateTime,
     )
@@ -112,10 +117,11 @@ void _focusSessionSerialize(
   writer.writeBool(offsets[2], object.controlledModeEnabled);
   writer.writeString(offsets[3], object.date);
   writer.writeLong(offsets[4], object.phase);
-  writer.writeBool(offsets[5], object.strictFocusEnabled);
-  writer.writeDateTime(offsets[6], object.wakeUpTime);
-  writer.writeDateTime(offsets[7], object.workEndTime);
-  writer.writeDateTime(offsets[8], object.workStartTime);
+  writer.writeDateTime(offsets[5], object.planningEndsAt);
+  writer.writeBool(offsets[6], object.strictFocusEnabled);
+  writer.writeDateTime(offsets[7], object.wakeUpTime);
+  writer.writeDateTime(offsets[8], object.workEndTime);
+  writer.writeDateTime(offsets[9], object.workStartTime);
 }
 
 FocusSession _focusSessionDeserialize(
@@ -131,10 +137,11 @@ FocusSession _focusSessionDeserialize(
     date: reader.readString(offsets[3]),
     id: id,
     phase: reader.readLongOrNull(offsets[4]) ?? 0,
-    strictFocusEnabled: reader.readBoolOrNull(offsets[5]) ?? false,
-    wakeUpTime: reader.readDateTimeOrNull(offsets[6]),
-    workEndTime: reader.readDateTimeOrNull(offsets[7]),
-    workStartTime: reader.readDateTimeOrNull(offsets[8]),
+    planningEndsAt: reader.readDateTimeOrNull(offsets[5]),
+    strictFocusEnabled: reader.readBoolOrNull(offsets[6]) ?? false,
+    wakeUpTime: reader.readDateTimeOrNull(offsets[7]),
+    workEndTime: reader.readDateTimeOrNull(offsets[8]),
+    workStartTime: reader.readDateTimeOrNull(offsets[9]),
   );
   return object;
 }
@@ -157,12 +164,14 @@ P _focusSessionDeserializeProp<P>(
     case 4:
       return (reader.readLongOrNull(offset) ?? 0) as P;
     case 5:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
-    case 6:
       return (reader.readDateTimeOrNull(offset)) as P;
+    case 6:
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 7:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 8:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 9:
       return (reader.readDateTimeOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -635,6 +644,80 @@ extension FocusSessionQueryFilter
   }
 
   QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      planningEndsAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'planningEndsAt',
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      planningEndsAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'planningEndsAt',
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      planningEndsAtEqualTo(DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'planningEndsAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      planningEndsAtGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'planningEndsAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      planningEndsAtLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'planningEndsAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      planningEndsAtBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'planningEndsAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
       strictFocusEnabledEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -941,6 +1024,20 @@ extension FocusSessionQuerySortBy
   }
 
   QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
+      sortByPlanningEndsAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'planningEndsAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
+      sortByPlanningEndsAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'planningEndsAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
       sortByStrictFocusEnabled() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'strictFocusEnabled', Sort.asc);
@@ -1074,6 +1171,20 @@ extension FocusSessionQuerySortThenBy
   }
 
   QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
+      thenByPlanningEndsAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'planningEndsAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
+      thenByPlanningEndsAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'planningEndsAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
       thenByStrictFocusEnabled() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'strictFocusEnabled', Sort.asc);
@@ -1163,6 +1274,13 @@ extension FocusSessionQueryWhereDistinct
   }
 
   QueryBuilder<FocusSession, FocusSession, QDistinct>
+      distinctByPlanningEndsAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'planningEndsAt');
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QDistinct>
       distinctByStrictFocusEnabled() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'strictFocusEnabled');
@@ -1225,6 +1343,13 @@ extension FocusSessionQueryProperty
   QueryBuilder<FocusSession, int, QQueryOperations> phaseProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'phase');
+    });
+  }
+
+  QueryBuilder<FocusSession, DateTime?, QQueryOperations>
+      planningEndsAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'planningEndsAt');
     });
   }
 
