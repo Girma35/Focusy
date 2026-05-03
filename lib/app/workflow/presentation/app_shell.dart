@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../application/workflow_notifier.dart';
-import '../../domain/focus_workflow_state.dart';
-import 'screens/night_setup_screen.dart';
-import 'screens/planning_locked_screen.dart';
-import 'screens/schedule_setup_screen.dart';
-import 'screens/focus_armed_screen.dart';
-import 'screens/focus_active_screen.dart';
-import 'screens/completed_screen.dart';
+import 'package:focusy/app/workflow/application/workflow_notifier.dart';
+import 'package:focusy/app/workflow/domain/focus_workflow_state.dart';
+import 'package:focusy/app/workflow/presentation/screens/night_setup_screen.dart';
+import 'package:focusy/app/workflow/presentation/screens/planning_locked_screen.dart';
+import 'package:focusy/app/workflow/presentation/screens/schedule_setup_screen.dart';
+import 'package:focusy/app/workflow/presentation/screens/focus_armed_screen.dart';
+import 'package:focusy/app/workflow/presentation/screens/focus_active_screen.dart';
+import 'package:focusy/app/workflow/presentation/screens/completed_screen.dart';
 
 class AppShell extends ConsumerWidget {
   const AppShell({super.key});
