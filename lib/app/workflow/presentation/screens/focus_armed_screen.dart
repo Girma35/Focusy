@@ -49,9 +49,7 @@ class _FocusArmedScreenState extends ConsumerState<FocusArmedScreen> {
 
     final startTime = state.workStartTime;
     final endTime = state.workEndTime;
-    final totalWait = startTime != null
-        ? startTime.difference(DateTime.now().subtract(const Duration(hours: 24)))
-        : const Duration(hours: 8);
+
     final isReady = _remaining == Duration.zero;
 
     final startTOD = startTime != null
